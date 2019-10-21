@@ -32,7 +32,7 @@ describe("Robot actions", () => {
         expect(robotActions.NextLetter(currentLetter)).toEqual(expectedAction)
     })
 
-    test("[action] Next letter returns to A when currentLetteris Z", () => {
+    test("[action] Next letter returns to A when currentLetter is Z", () => {
         const currentLetter = 'Z'
         const expectedAction = {
             type: types.RobotActionTypes.NEXT_LETTER,
@@ -52,6 +52,34 @@ describe("Robot actions", () => {
             }
         }
         expect(robotActions.SayMessage(message)).toEqual(expectedAction)
+    })
+
+    test("[action] Start Iterator (default interval)", () => {
+        const expectedAction = {
+            type: types.RobotActionTypes.START_ITERATOR,
+            payload: {
+                iterateInterval: 700
+            }
+        }
+        expect(robotActions.StartIterator()).toEqual(expectedAction)
+    })
+
+    test("[action] Start Iterator (custom interval)", () => {
+        const iterateInterval = 1000
+        const expectedAction = {
+            type: types.RobotActionTypes.START_ITERATOR,
+            payload: {
+                iterateInterval
+            }
+        }
+        expect(robotActions.StartIterator(iterateInterval)).toEqual(expectedAction)
+    })
+
+    test("[action] Stop Iterator", () => {
+        const expectedAction = {
+            type: types.RobotActionTypes.STOP_ITERATOR,
+        }
+        expect(robotActions.StopIterator()).toEqual(expectedAction)
     })
 
 })

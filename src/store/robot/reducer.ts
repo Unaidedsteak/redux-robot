@@ -4,7 +4,9 @@ import { RobotState, RobotActionTypes } from './types'
 export const initialState: RobotState = {
     isOn: false,
     currentLetter: 'A',
-    messageToSay: ''
+    messageToSay: '',
+    isIterating: false,
+    iterateInterval: 700 // Milliseconds
 }
 
 const reducer: Reducer<RobotState> = (state = initialState, action) => {
@@ -13,7 +15,7 @@ const reducer: Reducer<RobotState> = (state = initialState, action) => {
             return {...state, isOn: false}
         }
         case RobotActionTypes.START_ROBOT : {
-            return {...state, isOn: true, currentLetter: 'A' }
+            return {...state, isOn: true, currentLetter: 'A', iterateInterval: 700 } // Extra values here to reset to default on start
         }
         case RobotActionTypes.NEXT_LETTER : {
             return {...state, currentLetter: action.payload.currentLetter}
