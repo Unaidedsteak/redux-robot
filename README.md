@@ -9,6 +9,18 @@ The robots are taking over!
 
 A simple Typscript + Redux project for learning
 
+### Requirements:
+
+This robot uses the `say` library which relies on having a TTS implementation installed. 
+
+For Linux(arch):
+
+```
+yay festival
+```
+Choose the festival package `extra/festival` as well as `community/festival-english`
+
+
 #### How to run:
 ```
 npm install && npm run prod
