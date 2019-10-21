@@ -6,7 +6,8 @@ describe("Robot selectors", () => {
     const exampleState = {
         robot: {
             isOn: true,
-            currentLetter: 'A'
+            currentLetter: 'A',
+            messageToSay: ''
         }
     }
 

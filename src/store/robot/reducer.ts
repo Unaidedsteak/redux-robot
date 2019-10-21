@@ -3,7 +3,8 @@ import { RobotState, RobotActionTypes } from './types'
 
 export const initialState: RobotState = {
     isOn: false,
-    currentLetter: 'A'
+    currentLetter: 'A',
+    messageToSay: ''
 }
 
 export function NextLetter (currentLetter: string): string {
