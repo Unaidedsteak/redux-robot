@@ -8,7 +8,7 @@ function MainMenuPrompt(): Promise<any> {
     return inquirer.prompt([
         {
             type: 'list',
-            message: 'Which action would you like to perform',
+            message: 'Select and action:',
             name: 'mainMenu',
             choices: [
                 {
@@ -18,6 +18,10 @@ function MainMenuPrompt(): Promise<any> {
                 {
                     name: 'Print next letter',
                     value: 'nextLetter'
+                },
+                {
+                    name: 'Toggle AutoIterate',
+                    value: 'toggleAutoIterate'
                 },
                 new inquirer.Separator(),
                 {
@@ -29,12 +33,24 @@ function MainMenuPrompt(): Promise<any> {
     ])
 }
 
+function AutoInterateIntervalPrompt(): Promise<any> {
+    return inquirer.prompt([
+        {
+            type: 'number',
+            message: 'Enter an iteration interval (Milliseconds):',
+            default: 700,
+            name: 'autoIterateInterval',
+        }
+    ])
+}
+
 async function MainMenu(error?: string) {
     const state = store.getState()
     console.clear()
-    console.log('Robot status: ', robotSelectors.selectIsRobotOn(state) ? chalk.green('ONLINE') : chalk.red('OFFLINE'))
-    console.log('Current letter: ', chalk.blue(robotSelectors.selectCurrentLetter(state)))
-    
+    console.log('Robot status   : ', robotSelectors.selectIsRobotOn(state) ? chalk.green('ONLINE') : chalk.red('OFFLINE'))
+    console.log('Current letter : ', chalk.blue(robotSelectors.selectCurrentLetter(state)))
+    console.log('AutoIterate    : ', robotSelectors.selectIsIterating(state) ? chalk.green('ONLINE') : chalk.red('OFFLINE'))
+
     const action = await MainMenuPrompt()
 
     if (action.mainMenu === "toggleRobot") {
@@ -46,9 +62,24 @@ async function MainMenu(error?: string) {
             store.dispatch(robotActions.NextLetter(robotSelectors.selectCurrentLetter(state)))
             MainMenu()
         } catch (error) {
-            console.log(error)
+
         }
-        
+
+    } else if (action.mainMenu === "toggleAutoIterate") {
+        if (!robotSelectors.selectIsIterating(state)) {
+            const result = await AutoInterateIntervalPrompt()
+            try {
+                store.dispatch(robotActions.StartIterator(result.autoIterateInterval))
+                MainMenu()
+            } catch (error) {
+                console.log(error)
+            }
+
+
+        } else {
+            store.dispatch(robotActions.StopIterator())
+        }
+
     } else {
         process.exit(0)
     }

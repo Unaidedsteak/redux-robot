@@ -73,6 +73,42 @@ describe("Robot reducer", () => {
         expect(newState).toEqual(expectedState)
     })
 
+
+    test("Start Iterator", () => {
+        const expectedState: types.RobotState = {
+            isOn: true,
+            currentLetter: 'B',
+            messageToSay: '',
+            isIterating: true,
+            iterateInterval: 101
+        }
+        const action = {
+            type: types.RobotActionTypes.START_ITERATOR,
+            payload: {
+                iterateInterval: 101
+            }
+        }
+
+        const newState = robotReducer(initialState, action)
+        expect(newState).toEqual(expectedState)
+    })
+
+    test("Stop Iterator", () => {
+        const expectedState: types.RobotState = {
+            isOn: true,
+            currentLetter: 'B',
+            messageToSay: '',
+            isIterating: false,
+            iterateInterval: 700
+        }
+        const action = {
+            type: types.RobotActionTypes.STOP_ITERATOR,
+        }
+
+        const newState = robotReducer(initialState, action)
+        expect(newState).toEqual(expectedState)
+    })
+
     test("Invalid action", () => {
         const action = {
             type: "INVALIDACTION"
