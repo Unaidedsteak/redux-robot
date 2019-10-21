@@ -13,7 +13,10 @@ describe("Robot actions", () => {
 
     test("[action] Start robot", () => {
         const expectedAction = {
-            type: types.RobotActionTypes.START_ROBOT
+            type: types.RobotActionTypes.START_ROBOT,
+            payload: {
+                currentLetter: 'A'
+            }
         }
         expect(robotActions.startRobot()).toEqual(expectedAction)
     })
@@ -23,7 +26,18 @@ describe("Robot actions", () => {
         const expectedAction = {
             type: types.RobotActionTypes.NEXT_LETTER,
             payload: {
-                currentLetter
+                currentLetter: 'B'
+            }
+        }
+        expect(robotActions.NextLetter(currentLetter)).toEqual(expectedAction)
+    })
+
+    test("[action] Next letter returns to A when currentLetteris Z", () => {
+        const currentLetter = 'Z'
+        const expectedAction = {
+            type: types.RobotActionTypes.NEXT_LETTER,
+            payload: {
+                currentLetter: 'A'
             }
         }
         expect(robotActions.NextLetter(currentLetter)).toEqual(expectedAction)

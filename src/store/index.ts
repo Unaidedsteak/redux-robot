@@ -7,7 +7,7 @@ export interface ApplicationState {
     robot: RobotState
 }
 
-export const createRootReducer = combineReducers(
+const createRootReducer = combineReducers(
     {
         robot: robotReducer,
     }
@@ -15,7 +15,7 @@ export const createRootReducer = combineReducers(
 
 const middlewares = applyMiddleware(OfflineRobot, Speak)
 
-export default function configureStore(): Store<ApplicationState> {
+function configureStore(): Store<ApplicationState> {
     const store = createStore(
         createRootReducer,
         middlewares

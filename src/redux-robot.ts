@@ -34,7 +34,7 @@ async function MainMenu(error?: string) {
     console.clear()
     console.log('Robot status: ', robotSelectors.selectIsRobotOn(state) ? chalk.green('ONLINE') : chalk.red('OFFLINE'))
     console.log('Current letter: ', chalk.blue(robotSelectors.selectCurrentLetter(state)))
-
+    
     const action = await MainMenuPrompt()
 
     if (action.mainMenu === "toggleRobot") {

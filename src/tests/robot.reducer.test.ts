@@ -1,4 +1,4 @@
-import { NextLetter, robotReducer } from '../store/robot/reducer'
+import { robotReducer } from '../store/robot/reducer'
 import * as types from '../store/robot/types'
 
 
@@ -25,6 +25,13 @@ describe("Robot reducer", () => {
     })
 
     test("Start robot", () => {
+
+        const initialState: types.RobotState = {
+            isOn: false,
+            currentLetter: 'B',
+            messageToSay: ''
+        }
+
         const expectedState: types.RobotState = {
             isOn: true,
             currentLetter: 'A',
@@ -32,6 +39,24 @@ describe("Robot reducer", () => {
         }
         const action = {
             type: types.RobotActionTypes.START_ROBOT
+        }
+
+        const newState = robotReducer(initialState, action)
+        expect(newState).toEqual(expectedState)
+    })
+
+    test("Next letter", () => {
+
+        const expectedState: types.RobotState = {
+            isOn: true,
+            currentLetter: 'B',
+            messageToSay: ''
+        }
+        const action = {
+            type: types.RobotActionTypes.NEXT_LETTER,
+            payload: {
+                currentLetter: 'B'
+            }
         }
 
         const newState = robotReducer(initialState, action)
@@ -47,39 +72,4 @@ describe("Robot reducer", () => {
         expect(newState).toEqual(initialState)
     })
 
-    test("Next Letter - Proceeds to next letter in alphabet", () => {
-        const expectedState: types.RobotState = {
-            isOn: true,
-            currentLetter: 'D',
-            messageToSay: ''
-        }
-        const action = {
-            type: types.RobotActionTypes.NEXT_LETTER,
-            payload: {
-                currentLetter: 'C',
-                messageToSay: ''
-            }
-        }
-
-        const newState = robotReducer(initialState, action)
-        expect(newState).toEqual(expectedState)
-    })
-
-    test("Next Letter - Returns to 'A' once we reach 'Z'", () => {
-
-        const expectedState: types.RobotState = {
-            isOn: true,
-            currentLetter: 'A',
-            messageToSay: ''
-        }
-        const action = {
-            type: types.RobotActionTypes.NEXT_LETTER,
-            payload: {
-                currentLetter: 'Z'
-            }
-        }
-
-        const newState = robotReducer(initialState, action)
-        expect(newState).toEqual(expectedState)
-    })
 })

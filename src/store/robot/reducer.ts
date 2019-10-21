@@ -7,26 +7,16 @@ export const initialState: RobotState = {
     messageToSay: ''
 }
 
-export function NextLetter (currentLetter: string): string {
-    const currentCode = currentLetter.charCodeAt(0)
-    if(currentCode >= 90) {
-        return 'A'
-    } else {
-        return String.fromCharCode(currentCode +1)
-    }
-}
-
 const reducer: Reducer<RobotState> = (state = initialState, action) => {
     switch (action.type) {
         case RobotActionTypes.STOP_ROBOT : {
             return {...state, isOn: false}
         }
         case RobotActionTypes.START_ROBOT : {
-            return {...state, isOn: true, currentLetter: 'A'}
+            return {...state, isOn: true, currentLetter: 'A' }
         }
         case RobotActionTypes.NEXT_LETTER : {
-            const nextLetter = NextLetter(action.payload.currentLetter)
-            return {...state, currentLetter: nextLetter}
+            return {...state, currentLetter: action.payload.currentLetter}
         }
 
         default: {
