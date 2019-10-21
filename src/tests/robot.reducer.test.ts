@@ -6,13 +6,15 @@ describe("Robot reducer", () => {
 
     const initialState: types.RobotState = {
         isOn: true,
-        currentLetter: 'B'
+        currentLetter: 'B',
+        messageToSay: ''
     }
 
     test("Stop robot", () => {
         const expectedState: types.RobotState = {
             isOn: false,
-            currentLetter: 'B'
+            currentLetter: 'B',
+            messageToSay: ''
         }
         const action = {
             type: types.RobotActionTypes.STOP_ROBOT
@@ -25,7 +27,8 @@ describe("Robot reducer", () => {
     test("Start robot", () => {
         const expectedState: types.RobotState = {
             isOn: true,
-            currentLetter: 'A'
+            currentLetter: 'A',
+            messageToSay: ''
         }
         const action = {
             type: types.RobotActionTypes.START_ROBOT
@@ -47,12 +50,14 @@ describe("Robot reducer", () => {
     test("Next Letter - Proceeds to next letter in alphabet", () => {
         const expectedState: types.RobotState = {
             isOn: true,
-            currentLetter: 'D'
+            currentLetter: 'D',
+            messageToSay: ''
         }
         const action = {
             type: types.RobotActionTypes.NEXT_LETTER,
             payload: {
-                currentLetter: 'C'
+                currentLetter: 'C',
+                messageToSay: ''
             }
         }
 
@@ -64,7 +69,8 @@ describe("Robot reducer", () => {
 
         const expectedState: types.RobotState = {
             isOn: true,
-            currentLetter: 'A'
+            currentLetter: 'A',
+            messageToSay: ''
         }
         const action = {
             type: types.RobotActionTypes.NEXT_LETTER,

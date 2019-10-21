@@ -29,4 +29,15 @@ describe("Robot actions", () => {
         expect(robotActions.NextLetter(currentLetter)).toEqual(expectedAction)
     })
 
+    test("[action] Say Message", () => {
+        const message = 'Hello World!'
+        const expectedAction = {
+            type: types.RobotActionTypes.SAY_MESSAGE,
+            payload: {
+                messageToSay: message
+            }
+        }
+        expect(robotActions.SayMessage(message)).toEqual(expectedAction)
+    })
+
 })
