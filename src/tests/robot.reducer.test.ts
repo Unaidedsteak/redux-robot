@@ -9,7 +9,7 @@ describe("Robot reducer", () => {
         currentLetter: 'B',
         messageToSay: '',
         isIterating: false,
-        iterateInterval: 700
+        iterateInterval: 2500
     }
 
     test("Stop robot", () => {
@@ -18,7 +18,7 @@ describe("Robot reducer", () => {
             currentLetter: 'B',
             messageToSay: '',
             isIterating: false,
-            iterateInterval: 700
+            iterateInterval: 2500
         }
         const action = {
             type: types.RobotActionTypes.STOP_ROBOT
@@ -35,7 +35,7 @@ describe("Robot reducer", () => {
             currentLetter: 'B',
             messageToSay: '',
             isIterating: false,
-            iterateInterval: 700
+            iterateInterval: 2500
         }
 
         const expectedState: types.RobotState = {
@@ -43,7 +43,7 @@ describe("Robot reducer", () => {
             currentLetter: 'A',
             messageToSay: '',
             isIterating: false,
-            iterateInterval: 700
+            iterateInterval: 2500
         }
         const action = {
             type: types.RobotActionTypes.START_ROBOT
@@ -60,7 +60,7 @@ describe("Robot reducer", () => {
             currentLetter: 'B',
             messageToSay: '',
             isIterating: false,
-            iterateInterval: 700
+            iterateInterval: 2500
         }
         const action = {
             type: types.RobotActionTypes.NEXT_LETTER,
@@ -99,7 +99,7 @@ describe("Robot reducer", () => {
             currentLetter: 'B',
             messageToSay: '',
             isIterating: false,
-            iterateInterval: 700
+            iterateInterval: 2500
         }
         const action = {
             type: types.RobotActionTypes.STOP_ITERATOR,

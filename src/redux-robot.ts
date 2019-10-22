@@ -1,10 +1,11 @@
 import inquirer from 'inquirer'
-import chalk from 'chalk'
 import { store } from './store/index'
 import * as robotSelectors from './store/robot/selectors'
 import * as robotActions from './store/robot/actions/index'
+import * as statusBar from './status'
 
 function MainMenuPrompt(): Promise<any> {
+    statusBar.UpdateStatus(store.getState())
     return inquirer.prompt([
         {
             type: 'list',
@@ -38,21 +39,16 @@ function AutoInterateIntervalPrompt(): Promise<any> {
         {
             type: 'number',
             message: 'Enter an iteration interval (Milliseconds):',
-            default: 700,
+            default: 2500,
             name: 'autoIterateInterval',
         }
     ])
 }
 
-async function MainMenu(error?: string) {
-    const state = store.getState()
+async function MainMenu() {
     console.clear()
-    console.log('Robot status   : ', robotSelectors.selectIsRobotOn(state) ? chalk.green('ONLINE') : chalk.red('OFFLINE'))
-    console.log('Current letter : ', chalk.blue(robotSelectors.selectCurrentLetter(state)))
-    console.log('AutoIterate    : ', robotSelectors.selectIsIterating(state) ? chalk.green('ONLINE') : chalk.red('OFFLINE'))
-
     const action = await MainMenuPrompt()
-
+    const state = store.getState()
     if (action.mainMenu === "toggleRobot") {
         const action = robotSelectors.selectIsRobotOn(state) ? robotActions.stopRobot() : robotActions.startRobot()
         store.dispatch(action)

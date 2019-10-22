@@ -8,7 +8,7 @@ export function StartIterator(interval?: number): StartIterateAction {
     return {
         type: RobotActionTypes.START_ITERATOR,
         payload: {
-            iterateInterval: interval ? interval : 700 // Option to override the default interval
+            iterateInterval: interval ? interval : 2500 // Option to override the default interval
         }
     }
 }

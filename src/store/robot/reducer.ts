@@ -6,7 +6,7 @@ export const initialState: RobotState = {
     currentLetter: 'A',
     messageToSay: '',
     isIterating: false,
-    iterateInterval: 700 // Milliseconds
+    iterateInterval: 2500 // Milliseconds
 }
 
 const reducer: Reducer<RobotState> = (state = initialState, action) => {

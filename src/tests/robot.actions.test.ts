@@ -58,7 +58,7 @@ describe("Robot actions", () => {
         const expectedAction = {
             type: types.RobotActionTypes.START_ITERATOR,
             payload: {
-                iterateInterval: 700
+                iterateInterval: 2500
             }
         }
         expect(robotActions.StartIterator()).toEqual(expectedAction)

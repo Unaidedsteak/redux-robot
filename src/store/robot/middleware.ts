@@ -1,4 +1,3 @@
-import fs from 'fs'
 import say from 'say'
 import { Middleware } from 'redux'
 import { selectIsRobotOn, selectCurrentLetter } from './selectors'
@@ -6,6 +5,8 @@ import { store } from '../index'
 import { ApplicationState } from '..'
 import { RobotActionTypes } from './types'
 import * as robotActions from './actions/index'
+import { ChooseRandom } from '../../wordList'
+import * as statusBar from '../../status'
 
 export const OfflineRobot: Middleware = store => next => action => {
     const state: ApplicationState = store.getState()
@@ -24,11 +25,21 @@ function speechSynthesizer(messageToSay: string) {
     say.speak(messageToSay, '0.7')
 }
 
+
+function sayLetterAndWord(currentLetter: string) {
+    const word = ChooseRandom(currentLetter)
+    say.speak(currentLetter, '', 0.5, () => {
+        say.speak(word, '0.5')
+    })
+}
+
+
 let intervalHolder: number = 0
 function autoIterate(interval: number) {
     intervalHolder = <any>setInterval(()=> {
         const state = store.getState()
         store.dispatch(robotActions.NextLetter(selectCurrentLetter(state)))
+        //statusBar.UpdateStatus(store.getState()) Causes some usability issues
     }, interval)
 }
 
@@ -63,11 +74,12 @@ export const Speak: Middleware = store => next => action => {
             return next(action)
 
         case RobotActionTypes.SAY_MESSAGE:
-            speechSynthesizer(action.payload.messageToSay)
+            sayLetterAndWord(action.payload.messageToSay)
             return next(action)
 
         case RobotActionTypes.NEXT_LETTER:
             store.dispatch(robotActions.SayMessage(action.payload.currentLetter))
+            
 
         default:
             return next(action)
