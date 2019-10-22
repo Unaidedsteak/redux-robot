@@ -1,3 +1,4 @@
+import fs from 'fs'
 import say from 'say'
 import { Middleware } from 'redux'
 import { selectIsRobotOn, selectCurrentLetter } from './selectors'
@@ -41,7 +42,7 @@ export const AutoIterate: Middleware = store => next => action => {
         case RobotActionTypes.STOP_ITERATOR:
             clearInterval(intervalHolder)
             return next(action)
-            
+
         default:
             return next(action)
     }
@@ -49,7 +50,6 @@ export const AutoIterate: Middleware = store => next => action => {
 
 
 export const Speak: Middleware = store => next => action => {
-
     switch (action.type) {
         case RobotActionTypes.START_ROBOT:
             // Purposely misspelled redux to make the speech synthesis sound better :)

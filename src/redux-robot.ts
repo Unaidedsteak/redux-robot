@@ -74,8 +74,6 @@ async function MainMenu(error?: string) {
             } catch (error) {
                 console.log(error)
             }
-
-
         } else {
             store.dispatch(robotActions.StopIterator())
             MainMenu()
