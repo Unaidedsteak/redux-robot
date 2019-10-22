@@ -1,6 +1,7 @@
 import say from 'say'
 import { Middleware } from 'redux'
-import { selectIsRobotOn } from './selectors'
+import { selectIsRobotOn, selectCurrentLetter } from './selectors'
+import { store } from '../index'
 import { ApplicationState } from '..'
 import { RobotActionTypes } from './types'
 import * as robotActions from './actions/index'
@@ -22,6 +23,31 @@ function speechSynthesizer(messageToSay: string) {
     say.speak(messageToSay, '0.7')
 }
 
+let intervalHolder: number = 0
+function autoIterate(interval: number) {
+    intervalHolder = <any>setInterval(()=> {
+        const state = store.getState()
+        store.dispatch(robotActions.NextLetter(selectCurrentLetter(state)))
+    }, interval)
+}
+
+
+export const AutoIterate: Middleware = store => next => action => {
+    switch (action.type) {
+        case RobotActionTypes.START_ITERATOR:
+            autoIterate(action.payload.iterateInterval)
+            return next(action)
+
+        case RobotActionTypes.STOP_ITERATOR:
+            clearInterval(intervalHolder)
+            return next(action)
+            
+        default:
+            return next(action)
+    }
+}
+
+
 export const Speak: Middleware = store => next => action => {
 
     switch (action.type) {
@@ -32,6 +58,7 @@ export const Speak: Middleware = store => next => action => {
             return next(action)
 
         case RobotActionTypes.STOP_ROBOT:
+            store.dispatch(robotActions.StopIterator())
             speechSynthesizer("Goodbye!")
             return next(action)
 

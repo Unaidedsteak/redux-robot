@@ -1,7 +1,7 @@
 import { Store, createStore, combineReducers, applyMiddleware } from 'redux'
 import { robotReducer } from './robot/reducer'
 import { RobotState } from './robot/types'
-import { OfflineRobot, Speak } from './robot/middleware'
+import { OfflineRobot, Speak, AutoIterate } from './robot/middleware'
 
 export interface ApplicationState {
     robot: RobotState
@@ -13,7 +13,7 @@ const createRootReducer = combineReducers(
     }
 )
 
-const middlewares = applyMiddleware(OfflineRobot, Speak)
+const middlewares = applyMiddleware(OfflineRobot, Speak, AutoIterate)
 
 function configureStore(): Store<ApplicationState> {
     const store = createStore(

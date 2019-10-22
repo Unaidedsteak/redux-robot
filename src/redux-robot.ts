@@ -78,6 +78,7 @@ async function MainMenu(error?: string) {
 
         } else {
             store.dispatch(robotActions.StopIterator())
+            MainMenu()
         }
 
     } else {
